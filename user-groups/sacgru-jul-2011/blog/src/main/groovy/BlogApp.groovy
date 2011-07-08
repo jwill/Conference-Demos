@@ -1,4 +1,6 @@
 import com.bleedingwolf.ratpack.*
+import jwill.deckchair.*
+import org.json.*
 
 class BlogApp {
 	public static void main(String []args) {
@@ -6,25 +8,37 @@ class BlogApp {
 				set 'public', 'public'
 				set 'templateRoot', 'templates'
 				
+				def derby = new Deckchair([name:'posts',adaptor:'derby'])
+				
 				get("/") {
-					render 'index.html'
+					def list = derby.all()
+					render '/entry/index.html'
 				}
 				
-				post("/login") {
-					def result = doAuth(request)
-					if (result != "Unauthorized") {
-						"Logged in with username ${result[0]} and password ${result[1]}"
-					} else {
-						"Unauthorized"
-					}
+				get("/entry/list") {
+					def list = derby.all()
+					render '/entry/index.html', [posts: list]
 				}
-				
-				get("/post/list") {
-					"Calling list from blogapp file"
+
+				post("/entry/save") {
+					def entry = new Entry(params)
+					derby.save(entry.properties, {obj ->
+						println "Finished saving."
+						new JSONObject([success:true]).toString()
+					})
 				}
+
+				get("/entry/create") {
+					render '/entry/create.html'
+				}
+
+				get("/entry/show/:id") {
+					def entry = derby.get(urlparams.id)
+					render '/entry/show.html', [post: post]
+				}
+
 		}
 		AuthHelper.doAuth(app)
-		CrudHelper.doCrud(app, 'post', ['/post/list'])
 		RatpackServlet.serve(app)
 	}
 }

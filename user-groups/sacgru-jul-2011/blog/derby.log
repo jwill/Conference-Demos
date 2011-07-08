@@ -1,0 +1,10 @@
+----------------------------------------------------------------
+Thu Jul 07 12:05:31 PDT 2011:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.1.2 - (1095077): instance a816c00e-0131-05fd-9988-0000047cd030 
+on database directory /Users/jwill/Desktop/repos/Conference-Demos/user-groups/sacgru-jul-2011/blog/deckchair  with class loader sun.misc.Launcher$AppClassLoader@1ef6a746 
+Loaded from file:/Users/jwill/Desktop/repos/Conference-Demos/user-groups/sacgru-jul-2011/blog/lib/derby.jar
+java.vendor=Apple Inc.
+java.runtime.version=1.6.0_24-b07-334-10M3326
+user.dir=/Users/jwill/Desktop/repos/Conference-Demos/user-groups/sacgru-jul-2011/blog
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
