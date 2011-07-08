@@ -12,7 +12,7 @@ class BlogApp {
 				
 				get("/") {
 					def list = derby.all()
-					render '/entry/index.html'
+					render '/entry/index.html', [posts: list]
 				}
 				
 				get("/entry/list") {
