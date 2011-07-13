@@ -7,3 +7,6 @@ user-groups/**/login/.gradle/*
 *.class
 *.dat
 user-groups/sfgrails-jul-2011/blog/build/*
+
+user-groups/sfgrails-jul-2011/blog/deckchair/*
+*.log
