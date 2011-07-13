@@ -88,7 +88,7 @@
               <li><a href="/archive" title="/archive">Archive</a></li>
               <li><a href="#" title="/random">Random</a></li>
               <li><a href="/rss" title="RSS Feed">RSS</a></li>
-              <li><a href="/post/create">Create Post</a></li>
+              <li><a href="/entry/create">Create Post</a></li>
               <li><a href="#" title="javascript:;" id="btnSearch">Search</a></li>
               
            </nav>         
@@ -98,18 +98,17 @@
      <section id="main" class="clearfix">
      <div class="layout">           
      
-     <% if (post != null) { %>
-
+     <% if (entry != null) { %>
      <div id="designline">
         <h5 class="postDate">
-           <abbr><%= post.dateCreated %></abbr>
+           <abbr><%= entry.dateCreated %></abbr>
         </h5>
      </div>
 
      <article>
         <div>
-              <h2><%= post.title %></h2>
-              <%= post.content %>
+              <h2><%= entry.title %></h2>
+              <%= entry.content %>
               </div>
      </article>
 

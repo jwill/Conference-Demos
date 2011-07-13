@@ -19,7 +19,7 @@ $(document).ready ()->
 				window.location = "/"
 		$.ajax({
 			type: 'POST',
-			url: '/post/save',
+			url: 'save',
 			data: data,
 			success: s,
 			dataType: 'json'

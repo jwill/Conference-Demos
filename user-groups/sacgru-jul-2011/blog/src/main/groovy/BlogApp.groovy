@@ -34,7 +34,7 @@ class BlogApp {
 
 				get("/entry/show/:id") {
 					def entry = derby.get(urlparams.id)
-					render '/entry/show.html', [post: post]
+					render '/entry/show.html', [entry: entry]
 				}
 
 		}
