@@ -2,4 +2,8 @@
 gr8-usa-2011/TodoApp/staging/*
 user-groups/sacgru-jul-2011/blog/deckchair/*
 user-groups/sacgru-jul-2011/blog/build/*
-user-groups/sacgru-jul-2011/blog/.gradle/*
+user-groups/**/blog/.gradle/*
+user-groups/**/login/.gradle/*
+*.class
+*.dat
+user-groups/sfgrails-jul-2011/blog/build/*
