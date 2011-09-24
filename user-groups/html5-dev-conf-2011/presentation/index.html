@@ -22,7 +22,7 @@
 	<link rel="stylesheet" href="extensions/hash/deck.hash.css">
 	
 	<!-- Theme CSS files (menu swaps these out) -->
-	<link rel="stylesheet" id="style-theme-link" href="themes/style/web-2.0.css">
+	<link rel="stylesheet" id="style-theme-link" href="themes/style/swiss.css">
 	<link rel="stylesheet" id="transition-theme-link" href="themes/transition/horizontal-slide.css">
 	
 	<!-- Custom CSS just for this page -->
@@ -33,7 +33,7 @@
 
 <body class="deck-container">
 
-<div class="theme-menu">
+<!--div class="theme-menu">
 	<h2>Themes</h2>	
 	
 	<label for="style-themes">Style:</label>
@@ -51,7 +51,7 @@
 		<option value="themes/transition/fade.css">Fade</option>
 		<option value="">None</option>
 	</select>
-</div>
+</div-->
 
 <section class="slide" id="title-slide">
 	<h1>Intro to WebGL</h1>
@@ -117,6 +117,23 @@
 	</ul>
 </section>
 
+<section class="slide" id="camera">
+	<h2>Camera</h2>
+	<ul>
+		<li class="slide">Eye Point</li>
+		<li class="slide">Field of Vision</li>
+		<li class="slide">Near/Far Planes</li>
+		<li class="slide">Target(LookAt) Point</li>
+		<li class="slide">Up Vector</li>
+		<li class="slide">Fog/Culling/LOD</li>
+	</ul>
+	<pre class="slide">
+			<code>
+camera = new THREE.Camera(FOV, ASPECT, NEAR, FAR, [target]);
+			</code>
+	</pre>
+</section>
+
 <section class="slide" id="what-is-glsl">
 	<h2>What is GLSL?</h2>
 	<ul>
@@ -128,134 +145,247 @@
 	</ul>
 </section>
 
-<section class="slide" id="how-to-overview">
-	<h2>How to Make a Deck</h2>
-	<ol>
-		<li>
-			<h3>Write Slides</h3>
-			<p>Slide content is simple&nbsp;HTML.</p>
-		</li>
-		<li>
-			<h3>Choose Themes</h3>
-			<p>One for slide styles and one for deck&nbsp;transitions.</p>
-		</li>
-		<li>
-			<h3>Include Extensions</h3>
-			<p>Add extra functionality to your deck, or leave it stripped&nbsp;down.</p>
-		</li>
-	</ol>
-</section>
-
-<section class="slide" id="markup">
-	<h2>The Markup</h2>
-	<p>Slides are just HTML elements with a class of <code>slide</code>.</p>
-	<pre><code>&lt;section class=&quot;slide&quot;&gt;
-   &lt;h2&gt;How to Make a Deck&lt;/h2&gt;
-   &lt;ol&gt;
-      &lt;li&gt;
-         &lt;h3&gt;Write Slides&lt;/h3&gt;
-         &lt;p&gt;Slide content is simple HTML.&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-         &lt;h3&gt;Choose Themes&lt;/h3&gt;
-         &lt;p&gt;One for slide styles and one for deck transitions.&lt;/p&gt;
-      &lt;/li&gt;
-      &hellip;
-   &lt;/ol&gt;
-&lt;/section&gt;</code></pre>
-</section>
-
-<section class="slide" id="themes">
-	<h2>Style Themes</h2>
-	<p>Customizes the colors, typography, and layout of slide&nbsp;content.</p>
-	<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;/path/to/css/style-theme.css&quot;&gt;</code></pre>
-	<h2>Transition Themes</h2>
-	<p>Defines transitions between slides using CSS3 transitions.  Less capable browsers fall back to cutaways. But <strong>you</strong> aren&rsquo;t using <em>those</em> browsers to give your presentations, are&nbsp;you&hellip;</p>
-	<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;/path/to/css/transition-theme.css&quot;&gt;</code></pre>
-</section>
-
-<section class="slide" id="extensions">
-	<h2>Extensions</h2>
-	<p>Core gives you basic slide functionality with left and right arrow navigation, but you may want more. Here are the ones included in this&nbsp;deck:</p>
-	
+<section class="slide" id="vertex-shaders">
+	<h2>Vertex Shaders</h2>
 	<ul>
-		<li class="slide" id="extensions-goto">
-			<strong>deck.goto</strong>: Adds a shortcut key to jump to any slide number.  Hit g, type in the slide number, and hit&nbsp;enter.
-		</li>
-		
-		<li class="slide" id="extensions-hash">
-			<strong>deck.hash</strong>: Enables internal linking within slides, deep linking to individual slides, and updates the address bar &amp; a permalink anchor with each slide&nbsp;change.
-		</li>
-
-		<li class="slide" id="extensions-menu">
-			<strong>deck.menu</strong>: Adds a menu view, letting you see all slides in a grid. Hit m to toggle to menu view, continue navigating your deck, and hit m to return to normal view. Touch devices can double-tap the deck to switch between&nbsp;views.
-		</li>
-
-		<li class="slide" id="extensions-navigation">
-			<strong>deck.navigation</strong>: Adds clickable left and right buttons for the less keyboard&nbsp;inclined.
-		</li>
-
-		<li class="slide" id="extensions-status">
-			<strong>deck.status</strong>: Adds a page number indicator. (current/total)
-		</li>
+		<li>Run once per vertex in a mesh</li>
+		<li>Can alter color, position, or texture coordinates</li>
 	</ul>
+Example vertex shader:
+<pre><code>
+&lt;script id=&quot;shader-vs&quot; type=&quot;x-shader/x-vertex&quot;&gt;
+    #ifdef GL_ES
+    precision highp float;
+    #endif
+    
+    void main(void) {
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,
+ 1.0);
+    }
+&lt;/script&gt;
+</code></pre>
+</section>
+
+<section class="slide" id="fragment-shaders">
+	<h2>Frament(Pixel) Shaders</h2>
+	<ul>
+		<li>Run on every pixel in a mesh</li>
+		<li>Can produce effects such as bump mapping and shadowing</li>
+		<li>Only knows* about the pixel it is working on</li>
+	</ul>
+Example fragment shader:
+<pre><code>
+&lt;script id=&quot;shader-vs&quot; type=&quot;x-shader/x-vertex&quot;&gt;
+    #ifdef GL_ES
+    precision highp float;
+    #endif
+    
+    void main(void) {
+          gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+    }
+&lt;/script&gt;
+</code></pre>
+</section>
+
+<section class="slide" id="lighting">
+	<h2>Lighting</h2>
+	<ul>
+		<li class="slide">Ambient</li>
+		<li class="slide">Point</li>
+		<li class="slide">Directional</li>
+		</ul>
+		<pre class="slide">
+			<code>
+new THREE.AmbientLight(hexColor);
+new THREE.PointLight(hexColor, [intensity], [distance]);
+new THREE.DirectionalLight(hexColor, [intensity], [distance], [castShadow]);
+			</code>
+		</pre>
+</section>
+
+<section class="slide" id="shading">
+	<h2>Shading</h2>
+	<ul>
+		<li class="slide">Flat</li>
+		<li class="slide">Lambertian</li>
+		<li class="slide">Gouraud</li>
+		<li class="slide">Phong</li>
+	</ul>
+</section>
+<section class="slide" id="texturing">
+
+</section>
+
+<section class="slide" id="texturing-demo">
+	<h2>Texturing Demo</h2>
+	<pre><code>
+function drawScene() {
+	var texture = THREE.ImageUtils.loadTexture("200407-bluemarble.jpg" );
+	var material = new THREE.MeshPhongMaterial( {
+			color: 0xFFFFFF, ambient: 0xFFFFFF, map:texture
+	} );
+	sphere = new THREE.Mesh(new THREE.Sphere(32, 32, 32), material);
+	scene.addObject(sphere);
+}
+	</code></pre>
+</section>
+
+<section class="slide" id="shader-demo-code">
+	<h2>Shader Demo Code</h2>
+	<pre><code>
+function drawTriangle() {
+	var geometry, geoMaterial;
 	
-	<p class="slide" id="extension-folders">Each extension folder in the download package contains the necessary JavaScript, CSS, and HTML&nbsp;files. For a complete list of extension modules included in deck.js, check out the&nbsp;<a href="http://imakewebthings.github.com/deck.js/docs">documentation</a>.</p>
-</section>
-
-<section class="slide" id="nested">
-	<h2>Nested Slides</h2>
-	<p>That last slide had a few steps.  To create substeps in slides, just nest them:</p>
-	<pre><code>&lt;section class=&quot;slide&quot;&gt;
-  &lt;h2&gt;Extensions&lt;/h2&gt;
-  &lt;p&gt;Core gives you basic slide functionality...&lt;/p&gt;		
-  &lt;ul&gt;
-     &lt;li class=&quot;slide&quot;&gt;
-        &lt;h3&gt;deck.goto&lt;/h3&gt;
-        &lt;p&gt;Adds a shortcut key to jump to any slide number...&lt;/p&gt;
-     &lt;/li&gt;
-     &lt;li class=&quot;slide&quot;&gt;...&lt;/li&gt;	
-     &lt;li class=&quot;slide&quot;&gt;...&lt;/li&gt;
-     &lt;li class=&quot;slide&quot;&gt;...&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/section&gt;</code></pre>
-</section>
-
-<section class="slide" id="elements-images">
-	<h2>Other Elements: Images</h2>
-	<img src="http://placekitten.com/600/375" alt="Kitties">
-	<pre><code>&lt;img src=&quot;http://placekitten.com/600/375&quot; alt=&quot;Kitties&quot;&gt;</code></pre>
-</section>
-
-<section class="slide" id="elements-blockquotes">
-	<h2>Other Elements: Blockquotes</h2>
-	<blockquote cite="http://example.org">
-		<p>Food is an important part of a balanced diet.</p>
-		<p><cite>Fran Lebowitz</cite></p>
-	</blockquote>
-	<pre><code>&lt;blockquote cite=&quot;http://example.org&quot;&gt;
-  &lt;p&gt;Food is an important part of a balanced diet.&lt;/p&gt;
-  &lt;p&gt;&lt;cite&gt;Fran Lebowitz&lt;/cite&gt;&lt;/p&gt;
-&lt;/blockquote&gt;</code></pre>
-</section>
-
-
-<section class="slide" id="elements-videos">
-	<h2>Other Elements: Video Embeds</h2>
-	<p>Embed videos from your favorite online video service or with an HTML5 video&nbsp;element.</p>
+	geoMaterial = new THREE.MeshLambertMaterial({
+			color:0xFF00FF
+	});
+	shaderMaterial = new THREE.MeshShaderMaterial({
+			vertexShader: $('#geom-vertexShader').get(0).innerHTML,
+			fragmentShader: $('#geom-fragmentShader').get(0).innerHTML,
+			vertexColors: true
+	});
 	
-	<iframe src="http://player.vimeo.com/video/1063136?title=0&amp;byline=0&amp;portrait=0" width="400" height="225" frameborder="0"></iframe>
+	geometry = new THREE.Geometry();
+	geometry.vertices.push(new THREE.Vertex(new THREE.Vector3(0, 10, 0)));
+	geometry.vertices.push(new THREE.Vertex(new THREE.Vector3(-10, -10, 0)));
+	geometry.vertices.push(new THREE.Vertex(new THREE.Vector3(10, -10, 0)));
+	geometry.faces.push(new THREE.Face3(0,1,2));
+	var triangle = new THREE.Mesh(geometry, shaderMaterial);
+		
+	plane = new THREE.Mesh( new THREE.Plane( 200, 200 ), new THREE.MeshBasicMaterial( { color: 0xe0e0e0 } ) );
+	//plane.rotation.x = - 90 * ( Math.PI / 180 );
+	plane.overdraw = true;
+	scene.addObject( plane );
 	
-	<pre><code>&lt;iframe src=&quot;http://player.vimeo.com/video/1063136?title=0&amp;amp;byline=0&amp;amp;portrait=0&quot; width=&quot;400&quot; height=&quot;225&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;</code></pre>
+	scene.addChild(triangle);
+}
+	</code></pre>
 </section>
 
-<section class="slide" id="digging-deeper">
-	<h2>Digging Deeper</h2>
-	<p>If you want to learn about making your own themes, extending deck.js, and more, check out the&nbsp;<a href="../docs/">documentation</a>.</p>
+<section class="slide" id="shader-demo">
+	<h2>Shader Demo</h2>
 </section>
 
-<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
-<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+<section class="slide" id="game-loop">
+	<h2>The Game Loop</h2>
+	<ul>
+		<li class="slide">Get updates.</li>
+		<li class="slide">Move objects and check for collisions</li>
+		<li class="slide">Draw stuff.</li>
+		<li class="slide">Repeat.</li>
+	</ul>
+</section>
+
+<section class="slide" id="blender">
+	<h2>Blender</h2>
+	<img src="images/blender_logo.png"/>
+	<ul>
+		<li class="slide">Free and open source 3D modeling application</li>
+		<li class="slide">Built-in Python API for scripting</li>
+		<li class="slide">Vibrant plugin community</li>
+		<li class="slide">Can import/export from many formats including Three.js</li>
+		<li class="slide">Advanced features</li>
+		<li class="slide">Uses in the Media Industry</li>
+		<li class="slide"><a href="http://blender.org">http://blender.org</a></li>
+	</ul>
+</section>
+
+
+<section class="slide" id="loading-assets">
+	<h2>Loading Assets</h2>
+	<pre><code>
+function drawCube() {
+    var loader = new THREE.JSONLoader();
+    loader.load( {model: "cube.js", callback: createScene1 });
+}
+
+function createScene1(geometry) {
+    geometry.materials[0][0].shading = THREE.FlatShading;
+    mesh = THREE.SceneUtils.addMesh( scene, geometry, 250, 400, 0, 0, 0, 0, 0,    
+        geometry.materials[0] );
+}
+	</code></pre>
+</section>
+
+<section class="slide" id="animation">
+	<h2>Animation</h2>
+	<ul>
+		<li class="slide">Armature - 3D representation of bones, ligaments, and constraints</li>
+		<li class="slide">Inverse kinematics - determine the endpoint and let the bones figure out where they need to be</li> 
+		<li class="slide">Keyframes - Represent an instant in time with of a mesh, its vertices, and or bones</li>
+		<li class="slide">Animation is created by combining influences of adjacent morph targets</li>
+		<li class="slide">Three.js exporters can generate morph targets</li> 	
+	</ul>
+</section>
+
+<section class="slide" id="blender">
+</section>
+
+
+
+<section class="slide" id="model-format">
+	<h2>Three.js JSON Model Format</h2>
+	<pre><code>var model = {
+
+    "version" : 2,
+    "scale" : 1.000000,
+    "materials": [... ],
+    "vertices": [ ... ],
+    "morphTargets": [],
+    "normals": [],
+    "colors": [],
+    "uvs": [[]],
+    "faces": [],
+    "edges" : []
+};
+	</code></pre>
+</section>
+
+<section class="slide" id="debugging-title-slide">
+	<h1>Debugging WebGL</h1>
+</section>
+
+<section class="slide" id="stats-webgl">
+	<h2>Stats.js</h2>
+<p>FPS - frames per second</p>
+<p>MS  - how many millis it took to render the frame</p>
+<p>MB  - the allocated megabytes</p> 
+
+Github: <a href="https://github.com/mrdoob/stats.js">
+	https://github.com/mrdoob/stats.js</a><br/>
+<pre><code>var stats = new Stats()
+$("body").append(stats.domElement);
+
+//... in your render function
+stats.update();
+</code></pre>
+</section>
+
+<section class="slide" id="webgl-inspector">
+	<h2>WebGL Inspector</h2>
+	<ul>
+		<li>Allows you to incrementally step through rendering</li>
+		<li>View texture assets and GLSL programs</li>
+		<li>Permits capturing individual frames</li>
+		<li>Can be embedded or installed as a Chrome/Webkit extension</li>
+		<li>Github: <a href="http://benvanik.github.com/WebGL-Inspector/">http://benvanik.github.com/WebGL-Inspector/</a></li>
+	</ul>
+</section>
+
+<section class="slide" id="debugging-title-slide">
+	<h1>Debugging WebGL</h1>
+</section>
+
+<section class="slide" id="debugging-title-slide">
+	<h1>Debugging WebGL</h1>
+</section>
+
+<section class="slide" id="debugging-title-slide">
+	<h1>Debugging WebGL</h1>
+</section>
+
+<!--a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a-->
 
 <p class="deck-status">
 	<span class="deck-status-current"></span>
@@ -286,6 +416,43 @@
 
 <!-- Specific to this page -->
 <script src="js/introduction.js"></script>
+<!-- Demos -->
+	<script src="demos/Three.js"></script>
+	<script src="demos/RequestAnimationFrame.js"></script>
+	<script src="demos/texturing/texturing.js"></script>
+	<script id="geom-fragmentShader" type="x-shader/x-fragment">
+		#ifdef GL_ES
+		precision highp float;
+		#endif
+		
+		varying vec4 vColor;
+		
+		void main(void) {
+			gl_FragColor = vec4(0.0,1.0,0.2,1.0);
+		}
+	</script>
+	
+	<script id="geom-vertexShader" type="x-shader/x-vertex">
+		#ifdef GL_ES
+		precision highp float;
+		#endif
 
+		void main(void) {
+			gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+		}
+	</script>
+
+	<script src="demos/geom.js"></script>
+	<script src="demos/loadingModel/loadingModel.js"></script>
+	<script src="demos/Stats.js"></script>
+	<script>
+	function addStats() {
+		var stats = new Stats();
+		$(".deck-current").append(stats.domElement);
+		setInterval( function () {
+				stats.update();
+    }, 1000 / 60 );
+	}
+	</script>
 </body>
 </html>
