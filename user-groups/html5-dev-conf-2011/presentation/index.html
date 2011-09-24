@@ -7,7 +7,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	
-	<title>Getting Started with deck.js</title>
+	<title>Intro to HTML5 Game Programming - WebGL Edition</title>
 	
 	<meta name="description" content="A jQuery library for modern HTML presentations">
 	<meta name="author" content="Caleb Troughton">
@@ -126,6 +126,7 @@
 		<li class="slide">Target(LookAt) Point</li>
 		<li class="slide">Up Vector</li>
 		<li class="slide">Fog/Culling/LOD</li>
+		<li class="slide">Advanced Camera Types</li>
 	</ul>
 	<pre class="slide">
 			<code>
@@ -193,12 +194,15 @@ Example fragment shader:
 		<li class="slide">Ambient</li>
 		<li class="slide">Point</li>
 		<li class="slide">Directional</li>
+		<li class="slide">SpotLight</li>
 		</ul>
 		<pre class="slide">
 			<code>
 new THREE.AmbientLight(hexColor);
 new THREE.PointLight(hexColor, [intensity], [distance]);
 new THREE.DirectionalLight(hexColor, [intensity], [distance], [castShadow]);
+new THREE.SpotLight(hexColor, [intensity], [distance], [castShadow]);
+
 			</code>
 		</pre>
 </section>
@@ -372,16 +376,71 @@ stats.update();
 	</ul>
 </section>
 
-<section class="slide" id="debugging-title-slide">
-	<h1>Debugging WebGL</h1>
+<section class="slide" id="three-js-title">
+	<h1>Three.js</h1>
 </section>
 
-<section class="slide" id="debugging-title-slide">
-	<h1>Debugging WebGL</h1>
+<section class="slide" id="three-js">
+	<h2>Three.js</h2>
+	<ul>
+<li class="slide">3D scenegraph engine
+<li class="slide">Abstraction layer over WebGL
+Capable of rendering to 
+Canvas 2D
+WebGL
+SVG
+<li class="slide">Exporters for popular 3D modeling applications/formats:
+Blender, 3DS Max, OBJ, FBX
+</li>
+<li class="slide">Industry demos:<br/><a href="http://ro.me">3 Dreams of Black</a><br/>
+<a href="http://stickmanventures.com/labs/demo/webgl-threejs-morph-target/">
+Ginger Facial Rigging</a>
+</li>
+</ul>
 </section>
 
-<section class="slide" id="debugging-title-slide">
-	<h1>Debugging WebGL</h1>
+<section class="slide" id="creating-meshes">
+	<h2>Creating Meshes</h2>
+	<ul>
+		<li class="slide">Geometry</li>
+		<li class="slide">Built-in types:
+			<ul>
+				<li>Sphere</li>
+				<li>Plane</li>
+				<li>Cylinder</li>
+				<li>Cube</li>
+				<li>Text</li>
+				<li>Torus</li>
+				<li>Path</li>
+			</ul>
+		</li>
+	</ul>
+</section>
+
+<section class="slide" id="creating-triangle">
+	<h2>Creating Meshes - Code</h2>
+	<pre><code>geometry = new THREE.Geometry();
+geometry.vertices.push(new THREE.Vertex(new THREE.Vector3(0, 10, 0)));
+geometry.vertices.push(new THREE.Vertex(new THREE.Vector3(-10, -10, 0)));
+geometry.vertices.push(new THREE.Vertex(new THREE.Vector3(10, -10, 0)));
+geometry.faces.push(new THREE.Face3(0,1,2));
+var triangle = new THREE.Mesh(geometry, 
+	new THREE.MeshBasicMaterial( { color: 0x00ff00 } )
+);
+	
+plane = new THREE.Mesh( new THREE.Plane( 200, 200 ), 
+	new THREE.MeshBasicMaterial( { color: 0xe0e0e0 } )
+);
+
+plane.overdraw = true;
+
+scene.addObject( plane );
+scene.addChild(triangle);
+	</code></pre>
+</section>
+
+<section class="slide">
+	<h2>Materials</h2>
 </section>
 
 <!--a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
@@ -443,6 +502,7 @@ stats.update();
 	</script>
 
 	<script src="demos/geom.js"></script>
+	<script src="demos/geom2.js"></script>
 	<script src="demos/loadingModel/loadingModel.js"></script>
 	<script src="demos/Stats.js"></script>
 	<script>
