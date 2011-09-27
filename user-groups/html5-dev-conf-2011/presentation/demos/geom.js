@@ -3,8 +3,8 @@ var camera, scene, renderer;
 
 function init() {
 	// scene size
-	var HEIGHT = 200
-	, WIDTH = 200;
+	var HEIGHT = 400
+	, WIDTH = 400;
 	
 	// camera properties
 	var FOV = 45
