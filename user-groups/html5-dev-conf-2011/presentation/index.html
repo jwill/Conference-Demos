@@ -136,7 +136,7 @@
 		<li>Up Vector</li>
 			<pre class="slide">
 			<code>
-camera = new THREE.Camera(FOV, ASPECT, NEAR, FAR, [target]);
+camera = new THREE.[Perspective]Camera(FOV, ASPECT, NEAR, FAR, [target]);
 			</code>
 	</pre>
 		<li class="slide">Advanced Camera Types</li>
@@ -333,6 +333,110 @@ function drawTriangle() {
 	<h2>Shader Demo</h2>
 </section>
 
+<section class="slide" id="shader-vars">
+	<h2>Shader Variable Types</h2>
+	<ul>
+		<li>uniform</li>
+		<li>varying</li>
+		<li>attribute</li>
+	</ul>
+	<ul class="slide">
+		<li>bool</li>
+		<li>int</li>
+		<li>float</li>
+		<li>vec2 / vec3 / vec4</li>
+		<li>mat 2 / 3 / 4</li>
+		<li>sampler1D / 2D / 3D</li>
+	</ul>
+</section>
+
+<section class="slide" id="new-shader-types">
+	<h2>Constructing New Shader Types</h2>
+	<pre><code>
+	struct MyMaterial {
+            vec4 ambient;
+            vec4 diffuse;
+            vec4 specular;
+            float shininess;
+        };
+	</code></pre>
+</section>
+
+<section class="slide" id="shader-comms">
+	<h2>Communicating with the Shader</h2>
+	<div class="slide">
+		<pre><code>
+			var uniforms;
+		</code></pre>
+	</div>
+	<div class="slide">
+		<pre><code>
+			uniforms = {
+				time: {type:"f", value:0.0}
+			}
+		</code></pre>
+		<div class="slide">
+		<pre><code>
+		shaderMaterial = new THREE.MeshShaderMaterial({
+			// attributes: attributes,
+			uniforms: uniforms,
+			vertexShader: $('#geom-vertexShader').get(0).innerHTML,
+			fragmentShader: $('#geom-fragmentShader').get(0).innerHTML,
+	});
+	</code></pre>
+		</div>
+	</div>
+	
+</section>
+
+<section class="slide" id="custom-shader">
+	<h2>Custom Shader</h2>
+	<pre><code>
+	#ifdef GL_ES
+precision highp float;
+#endif
+
+uniform float time;
+
+void main(){
+    float r = cos(time);
+    float g = sin(time);
+    float b = tan(time);
+
+    gl_FragColor = vec4(r, 1.0 - g , b, 1.0);
+}
+	</code></pre>
+</section>
+
+<section class="slide" id="custom-shader">
+	<h2>Custom Shader</h2>
+	<pre><code>
+#ifdef GL_ES
+precision highp float;
+#endif
+
+uniform float time;
+float r, g, b;
+
+void computeColors() {
+	r = cos(time);
+	g = sin(time);
+	b = tan(time);
+}
+
+void main(){
+
+    gl_FragColor = vec4(r, 1.0 - g , b, 1.0);
+}
+	</code></pre>
+</section>
+
+<section class="slide" id="shader-toy-demo">
+	<h2>Shader Toy Demo</h2>
+	<a href="http://www.iquilezles.org/apps/shadertoy/">http://www.iquilezles.org/apps/shadertoy/</a>
+	
+</section>
+
 <section class="slide" id="uv-mapping">
 	<h2>Texturing/UV Mapping</h2>
 	<img src="images/uv_mapping.png" alt="UV Mapping"/>
@@ -455,6 +559,7 @@ function createScene1(obj) {
               };
     })();
 	</code></pre>
+	Src: http://paulirish.com/2011/requestanimationframe-for-smart-animating/
 </section>
 
 <section class="slide" id="stats-webgl">
