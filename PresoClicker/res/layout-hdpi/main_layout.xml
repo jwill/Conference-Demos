@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent" android:weightSum="1">
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/relativeLayout1" android:layout_weight="0.51">
+        <Button android:text="Previous" android:layout_height="250px" android:id="@+id/btnPrev" android:layout_width="150px" android:layout_centerVertical="true" android:layout_alignParentLeft="true" android:layout_marginLeft="32dp"></Button>
+
+        <Button android:text="Home" android:layout_height="200px" android:id="@+id/btnHome" android:layout_width="300px" android:layout_alignParentTop="true" android:layout_centerHorizontal="true"></Button>
+        <Button android:text="End" android:layout_height="200px" android:id="@+id/btnEnd" android:layout_width="300px" android:layout_alignParentBottom="true" android:layout_alignLeft="@+id/btnHome"></Button>
+        <Button android:text="Next" android:layout_height="250px" android:id="@+id/btnNext" android:layout_width="150px" android:layout_centerVertical="true" android:layout_alignParentRight="true" android:layout_marginRight="32dp"></Button>
+    </RelativeLayout>
+    
+</LinearLayout>
