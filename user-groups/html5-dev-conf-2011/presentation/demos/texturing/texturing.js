@@ -38,7 +38,7 @@ var drawGlobe = (function() {
 	
 	function drawScene() {
 		var texture   = THREE.ImageUtils.loadTexture( "demos/texturing/200407-bluemarble.jpg" );
-		var material = new THREE.MeshPhongMaterial( { color: 0xFFFFFF, ambient: 0xFFFFFF, map:texture } );
+		var material = new THREE.MeshBasicMaterial( { color: 0xFFFFFF, ambient: 0xFFFFFF, map:texture } );
 		
 		sphere = new THREE.Mesh(
 			new THREE.Sphere(32, 32, 32), material

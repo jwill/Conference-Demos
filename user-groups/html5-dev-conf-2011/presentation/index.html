@@ -343,7 +343,7 @@ function drawTriangle() {
 	<pre><code>
 function drawScene() {
 	var texture = THREE.ImageUtils.loadTexture("200407-bluemarble.jpg" );
-	var material = new THREE.MeshPhongMaterial( {
+	var material = new THREE.MeshBasicMaterial( {
 			color: 0xFFFFFF, ambient: 0xFFFFFF, map:texture
 	} );
 	sphere = new THREE.Mesh(new THREE.Sphere(32, 32, 32), material);
@@ -573,15 +573,15 @@ stats.update();
     var pusher = new Pusher('f4947b9bb697c9924c17');
     var channel = pusher.subscribe('preso_channel');
     channel.bind('advance_slide', function(data) {
+        $.deck("next");
     });
     channel.bind('decrement_slide', function(data) {
+        $.deck("prev");
     });
     channel.bind('go_to_slide', function(data) {
+        $.deck('go',Number(data.slide));
     });
     channel.bind('menu', function(data) {
-    });
-    channel.bind('my_event', function(data) {
-      $.deck('go',Number(data));
     });
   </script>
 </body>
