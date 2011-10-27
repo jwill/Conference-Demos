@@ -1,0 +1,35 @@
+<html>
+	<head>
+		<title>Login with Ratpack</title>
+		<script src="/js/jquery.js"></script>
+		<script src="/js/jquery.base64.js"></script>
+		<script>
+		function login() {
+			var username = \$("#username").val();
+			var password = \$("#password").val();
+			\$.ajax({
+					'type':'POST',
+					'url': 'http://localhost:5000/login',
+					'otherSettings': 'othervalues',
+					'beforeSend': function(xhr) {
+						xhr.setRequestHeader("Authorization", "Basic " + \$.base64.encode(username + ":" + password))
+					},
+					success: function(result) {
+						\$("#results").html(result);
+					}
+			});
+		}
+		</script>
+	</head>
+	<body>
+			<h2>Login Form with Ratpack</h2>
+			<div>
+				<span>Username:</span><input id="username" type="text" columns=20>
+			</div>
+			<div>
+				<span>Password:</span><input id="password" type="password" columns=20>
+			</div>
+			<button onclick='login()' >Login</button>
+			<div id="results"/>
+	</body>
+</html>
