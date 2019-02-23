@@ -1,0 +1,9 @@
+* Code for "Groovy, More than Gradle's DSL" talk
+
+To install Groovy, I recommend sdkman.io which allows you to install and uninstall different versions of Groovy and Gradle and keep your $PATH up to date. I recommend Groovy version 2.5.6 or higher.
+
+To run either SVG demo or the factorial example, run:
+
+=groovy name-of-file.groovy=
+
+Code for Android Studio plugin TBD
